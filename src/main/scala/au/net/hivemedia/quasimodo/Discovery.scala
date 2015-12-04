@@ -111,6 +111,9 @@ class Discovery extends Actor with ActorLogging {
     //TODO: Hand off this date some where to be stored and/or processed (LiamHaworth)
   }
 
+  /**
+    * Called by Akka to close the actor and its resources
+    */
   override def postStop(): Unit = {
     discoveryScheduler.cancel()
 
