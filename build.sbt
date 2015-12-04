@@ -2,7 +2,7 @@ name := "quasimodo"
 
 organization := "au.net.hivemedia"
 
-version := Process("git describe --tags --abbrev=5", baseDirectory.value).!!
+version := Process("git describe --tags --abbrev=5", baseDirectory.value).!!.replace("\n", "")
 
 scalaVersion := "2.11.7"
 
