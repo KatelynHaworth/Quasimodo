@@ -8,6 +8,8 @@ import au.net.hivemedia.quasimodo.ServiceMain.{actorSystem, config}
 import scala.concurrent.duration._
 import scala.collection.JavaConversions._
 
+import scala.concurrent.ExecutionContext.Implicits.global
+
 /**
   * Connects to a dedicated MikroTik device to
   * collect information about neighbour devices
