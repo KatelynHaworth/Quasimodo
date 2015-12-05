@@ -3,7 +3,7 @@ package au.net.hivemedia.quasimodo
 import akka.actor.{Cancellable, Actor, ActorLogging}
 import me.legrange.mikrotik.ApiConnection
 
-import au.net.hivemedia.quasimodo.AppMain._
+import au.net.hivemedia.quasimodo.ServiceMain.{actorSystem, config}
 
 import scala.concurrent.duration._
 import scala.collection.JavaConversions._
@@ -16,8 +16,6 @@ import scala.collection.JavaConversions._
   * @author Liam Haworth
   */
 class Discovery extends Actor with ActorLogging {
-
-  import actorSystem.dispatcher
 
   /**
     * Defines the API connection to the MikroTik used for discovery
