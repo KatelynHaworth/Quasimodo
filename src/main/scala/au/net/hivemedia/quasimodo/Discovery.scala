@@ -41,7 +41,7 @@ class Discovery extends Actor with ActorLogging {
       if(discoveryScheduler != null && !discoveryScheduler.isCancelled)
         throw new RuntimeException("Discovery scheduler was already running!")
 
-      val interval = config.getInt("discovery.interval")
+      val interval = config.getInt("quasimodo.discovery.interval")
 
       log.info(s"Starting scheduler for the discovery system to run every $interval seconds")
 
@@ -66,9 +66,9 @@ class Discovery extends Actor with ActorLogging {
   override def preStart(): Unit = {
     log.info("Initializing API connection to discovery system")
 
-    val host = config.getString("discovery.host")
-    val user = config.getString("discovery.user")
-    val pass = config.getString("discovery.pass")
+    val host = config.getString("quasimodo.discovery.host")
+    val user = config.getString("quasimodo.discovery.user")
+    val pass = config.getString("quasimodo.discovery.pass")
 
     log.info(s"Connecting to device at $host")
     discoveryServer = ApiConnection.connect(host)
@@ -106,7 +106,7 @@ class Discovery extends Actor with ActorLogging {
 
     log.info(s"Discovered ${deviceList.size} device(s)")
 
-    //TODO: Hand off this date some where to be stored and/or processed (LiamHaworth)
+    //TODO: Hand off this data some where to be stored and/or processed (LiamHaworth)
   }
 
   /**
