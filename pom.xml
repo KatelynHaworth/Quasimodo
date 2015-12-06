@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+    <properties>
+        <quasimodo.version>9.9.9</quasimodo.version>
+        <quasimodo.release>9999</quasimodo.release>
+        <quasimodo.commit>g12345</quasimodo.commit>
+    </properties>
+
+    <groupId>au.net.hivemedia</groupId>
+    <artifactId>quasimodo</artifactId>
+    <version>${quasimodo.version}</version>
+    <packaging>jar</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>rpm-maven-plugin</artifactId>
+                <version>2.1.4</version>
+
+                <executions>
+                    <execution>
+                        <id>generate-rpm</id>
+                        <goals>
+                            <goal>rpm</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <license>(c) 2015, Hive Media Productions</license>
+                    <distribution>Quasimodo</distribution>
+                    <group>Application/Collectors</group>
+                    <packager>Hive Media Productions</packager>
+                    <prefix>/opt/quasimodo</prefix>
+                    <sourceEncoding>UTF-8</sourceEncoding>
+                    <release>${quasimodo.release}-${quasimodo.commit}</release>
+                    <defineStatements>
+                        <defineStatement>_unpackaged_files_terminate_build 0</defineStatement>
+                    </defineStatements>
+
+                    <mappings>
+                        <mapping>
+                            <directory>/opt/quasimodo/</directory>
+                            <filemode>644</filemode>
+                            <username>root</username>
+                            <groupname>root</groupname>
+                            <sources>
+                                <source>
+                                    <location>target/scala-2.11/quasimodo-assembly-${quasimodo.version}-${quasimodo.release}-${quasimodo.commit}.jar</location>
+                                </source>
+                            </sources>
+                        </mapping>
+                    </mappings>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
