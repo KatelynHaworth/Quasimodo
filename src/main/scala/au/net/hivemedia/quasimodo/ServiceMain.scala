@@ -1,6 +1,6 @@
 package au.net.hivemedia.quasimodo
 
-import java.io.File
+import java.io.{BufferedWriter, FileWriter, File}
 
 import akka.actor.{ActorRef, Props, ActorSystem}
 import com.typesafe.config.{Config, ConfigFactory}
@@ -51,16 +51,37 @@ object ServiceMain extends LazyLogging {
     * Called to initialize the service and and its sub processes
     */
   private def initialize(): Unit = {
-    logger.info("Loading configuration")
+    logger.info("Loading configuration from /etc/quasimodo.conf")
 
     val defaultConfig = ConfigFactory.load()
-    val fileConfig = ConfigFactory.parseFile(new File("/etc/quasimodo.conf"))
-    config = fileConfig.withFallback(defaultConfig)
+    val configFile = new File("/etc/quasimodo.conf")
+
+    if(!configFile.exists()) {
+      logger.warn("Config file doesn't exist, writing defaults to config file")
+
+      val defaultConfigStream = scala.io.Source.fromInputStream(
+        this.getClass.getClassLoader.getResourceAsStream("application.conf")
+      )
+
+      val out = new java.io.PrintWriter(configFile)
+      try { defaultConfigStream.getLines().foreach(out.print) }
+      finally { out.close() }
+    }
+
+    val overridesConfig = ConfigFactory.parseFile(configFile)
+    config = overridesConfig.withFallback(defaultConfig)
 
 
     logger.info("Initializing actor system")
 
-    actorSystem = ActorSystem("Quasimodo")
+    actorSystem = ActorSystem("Quasimodo", ConfigFactory.parseString(
+      """
+        |akka {
+        |  loggers = ["akka.event.slf4j.Slf4jLogger"]
+        |  loglevel = "DEBUG"
+        |  logging-filter = "akka.event.slf4j.Slf4jLoggingFilter"
+        |}
+      """.stripMargin))
 
 
     logger.info("Initializing and starting the discovery system")
