@@ -1,0 +1,6 @@
+# Setting JAVA_OPTS
+# -----------------
+JAVA_OPTS="-Xms10m -Xmx40m"
+
+# For rpm/systemv you need to set the PIDFILE env variable as well
+PIDFILE="/var/run/${{app_name}}/play.pid"

@@ -26,3 +26,32 @@ lazy val root = (project in file(".")).
     buildInfoKeys := Seq[BuildInfoKey](name, version, scalaVersion, sbtVersion),
     buildInfoPackage := "au.net.hivemedia.quasimodo"
   )
+
+
+/**
+  * sbt-native-packager global settings
+  */
+enablePlugins(JavaServerAppPackaging)
+
+maintainer in Linux := "Hive Media Productions <development@hivemedia.net.au>"
+
+packageSummary in Linux := "Discovery and deployment service for MikroTik devices"
+
+packageDescription := "Discovery and deployment service for MikroTik devices"
+
+
+/**
+  * sbt-native-package rpm settings
+  */
+rpmVendor := "Hive Media Productions"
+
+rpmLicense := Option("(c) 2015, Hive Media Productions")
+
+version in Rpm := version.value.substring(0, version.value.indexOf("-"))
+
+rpmRelease := version.value.substring(version.value.indexOf("-") + 1).replace("-", "_")
+
+rpmRequirements := Seq("java-1.8.0-openjdk")
+
+
+//TODO: Implement deb settings
