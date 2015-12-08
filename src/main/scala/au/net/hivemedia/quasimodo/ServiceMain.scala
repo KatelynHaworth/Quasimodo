@@ -54,23 +54,8 @@ object ServiceMain extends LazyLogging {
     logger.info("Loading configuration from /etc/quasimodo.conf")
 
     val defaultConfig = ConfigFactory.load()
-    val configFile = new File("/etc/quasimodo.conf")
-
-    if(!configFile.exists()) {
-      logger.warn("Config file doesn't exist, writing defaults to config file")
-
-      val defaultConfigStream = scala.io.Source.fromInputStream(
-        this.getClass.getClassLoader.getResourceAsStream("application.conf")
-      )
-
-      val out = new java.io.PrintWriter(configFile)
-      try { defaultConfigStream.getLines().foreach(out.print) }
-      finally { out.close() }
-    }
-
-    val overridesConfig = ConfigFactory.parseFile(configFile)
+    val overridesConfig = ConfigFactory.parseFile(new File("/etc/quasimodo.conf"))
     config = overridesConfig.withFallback(defaultConfig)
-
 
     logger.info("Initializing actor system")
 

@@ -39,6 +39,10 @@ packageSummary in Linux := "Discovery and deployment service for MikroTik device
 
 packageDescription := "Discovery and deployment service for MikroTik devices"
 
+linuxPackageMappings := Seq(
+  packageMapping(file("src/main/resources/application.conf") -> "/etc/quasimodo.conf") withPerms "0644" withUser "quasimodo"
+)
+
 
 /**
   * sbt-native-package rpm settings
