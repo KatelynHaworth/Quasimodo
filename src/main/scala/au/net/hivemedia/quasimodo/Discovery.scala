@@ -66,19 +66,25 @@ class Discovery extends Actor with ActorLogging {
     * MikroTik API on the dedicated device
     */
   override def preStart(): Unit = {
-    log.info("Initializing API connection to discovery system")
+    try {
+      log.info("Initializing API connection to discovery system")
 
-    val host = config.getString("quasimodo.discovery.host")
-    val user = config.getString("quasimodo.discovery.user")
-    val pass = config.getString("quasimodo.discovery.pass")
+      val host = config.getString("quasimodo.discovery.host")
+      val user = config.getString("quasimodo.discovery.user")
+      val pass = config.getString("quasimodo.discovery.pass")
 
-    log.info(s"Connecting to device at $host")
-    discoveryServer = ApiConnection.connect(host)
+      log.info(s"Connecting to device at $host")
+      discoveryServer = ApiConnection.connect(host)
 
-    log.info(s"Logging into device as $user")
-    discoveryServer.login(user, pass)
+      log.info(s"Logging into device as $user")
+      discoveryServer.login(user, pass)
 
-    log.info("API connection to the discovery system was successful")
+      log.info("API connection to the discovery system was successful")
+    }
+    catch {
+      case ex: Exception =>
+        throw new RuntimeException("An exception was thrown when initializing the discovery actor", ex)
+    }
   }
 
   /**
