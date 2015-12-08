@@ -1,6 +1,6 @@
 package au.net.hivemedia.quasimodo
 
-import java.io.{BufferedWriter, FileWriter, File}
+import java.io.File
 
 import akka.actor.{ActorRef, Props, ActorSystem}
 import com.typesafe.config.{Config, ConfigFactory}
