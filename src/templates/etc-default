@@ -1,6 +1,14 @@
-# Setting JAVA_OPTS
+# Defines the max amount of memory that should
+# be allocated to the daemon for its heap
 # -----------------
-JAVA_OPTS="-Xms10m -Xmx40m"
+HEAP_MAX=40m
 
-# For rpm/systemv you need to set the PIDFILE env variable as well
-PIDFILE="/var/run/${{app_name}}/play.pid"
+# Defines how much memory should be allocated
+# into the heap on start
+# -----------------
+HEAP_START=10m
+
+# Defines the options passed to the Java call
+# when the daemon starts
+# -----------------
+JAVA_OPTS="-Xms$HEAP_START -Xmx$HEAP_MAX $JAVA_OPTS"
