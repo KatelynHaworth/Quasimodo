@@ -39,9 +39,9 @@ packageSummary in Linux := "Discovery and deployment service for MikroTik device
 
 packageDescription := "Discovery and deployment service for MikroTik devices"
 
-mappings in Universal += {
-  file("src/main/resources/application.conf") -> "conf/quasimodo.conf"
-}
+linuxPackageMappings += packageMapping(
+  (file("src/main/resources/application.conf"), "/etc/quasimodo.conf")
+) withPerms "644" withUser "quasimodo" withGroup "quasimodo" withConfig "noreplace"
 
 
 /**
