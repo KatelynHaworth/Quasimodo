@@ -13,7 +13,7 @@ before_deploy:
 deploy:
   provider: packagecloud
   repository: stable
-  user: hivemedia
+  username: hivemedia
   dist: el/7
   local-dir: target/rpm/RPMS/noarch
   token:
