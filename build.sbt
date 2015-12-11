@@ -50,7 +50,7 @@ linuxPackageMappings += packageMapping(
   */
 rpmVendor := "Hive Media Productions"
 
-rpmLicense := Option("(c) 2015, Hive Media Productions")
+rpmLicense := Option("Apache v2")
 
 version in Rpm := version.value.substring(0, version.value.indexOf("-"))
 
