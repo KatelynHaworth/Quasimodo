@@ -29,7 +29,8 @@ class Supervisor extends Actor with ActorLogging {
     */
   override val supervisorStrategy = AllForOneStrategy() {
       case ex: RuntimeException =>
-        log.error(s"Caught an exception that the service can't recover from, bailing", ex)
+        log.error(ex, s"Caught an exception that the service can't recover from, bailing")
+        Thread.sleep(10000)
         sys.exit(1)
         Stop
     }
