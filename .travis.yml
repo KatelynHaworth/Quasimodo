@@ -1,3 +1,13 @@
 language: scala
 scala:
-  - 2.11.7 
+  - 2.11.7
+
+before_deploy:
+  - sbt rpm:package-bin
+
+deploy:
+  provider: bintray
+  file: ./deploy-descriptor.json
+  user: liamhaworth
+  key:
+    secure: BwUjxws8xQLQctQoKD//Fba0/1RsbZ6ONc+/0aG8yVoClAPXdEUE+aHsX6S3wDt8+UPjandDS2dMimb147/DB+w1+WDIEm3YByzr6tpfn6jRZyZCuee0MrLnW8/9EUqoqkFbave4pmPRKModhG/JsO5WmWqwMEeuhYJRuh/i0TFdGXJYtJ5AvRvXg+cteKriCW1YpHG+HshCxMCkMO8YZX7wCgzct9UH6SVj1kBnK786/OHZ/VMYW2JwcYnds3lRzHjgNW8kZIsgCs6AEK7skaLugTzOfjzhdnDYLCeAuKJg3DKz3M5sl4wad8lKfPS5eAryEYtKV7T/17MGA0j6I16ee3tTNmJG53NYc2G7EI0F1KKahXpgvf0rdL1LQQgswy0PjTdMsYKxZHryVTiNebatP0J0ObJVBAknivY9pS+YdusaVAxcGKwdrDc9WBz3BEaDdWp1enyq03Yztx64YHMBWRAu+anQFdg6oeaNnbJ1KTYBzuY7/JHuhhrSClQLXW7iwkPxZMlLbUHgVzfQ/sxpWVSzA6+jQTs0jYXICAgJgRJwuPQ0z52ZuTuwKaeL2yTCK6BKnUZbYsUiUezX6j5e+iTkD49ULOsvhkViQ58dQeO3GUJqQxnzv23fWkDINRbV/KuUwDKuVLT2h0b9IAioSlNNzelHnOMKXfXEXqY=
