@@ -3,6 +3,7 @@ scala:
   - 2.11.7
 
 before_deploy:
+  - apt-get install rpm
   - sbt rpm:package-bin
 
 deploy:
