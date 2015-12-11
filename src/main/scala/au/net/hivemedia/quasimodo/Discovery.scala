@@ -20,6 +20,30 @@ import scala.concurrent.ExecutionContext.Implicits.global
 class Discovery extends Actor with ActorLogging {
 
   /**
+    * Initializes the actor by opening the connection to the
+    * MikroTik API on the dedicated device
+    */
+  try {
+    log.info("Initializing API connection to discovery system")
+
+    val host = config.getString("quasimodo.discovery.host")
+    val user = config.getString("quasimodo.discovery.user")
+    val pass = config.getString("quasimodo.discovery.pass")
+
+    log.info(s"Connecting to device at $host")
+    discoveryServer = ApiConnection.connect(host)
+
+    log.info(s"Logging into device as $user")
+    discoveryServer.login(user, pass)
+
+    log.info("API connection to the discovery system was successful")
+  }
+  catch {
+    case ex: Exception =>
+      throw new RuntimeException("An exception was thrown when initializing the discovery actor", ex)
+  }
+
+  /**
     * Defines the API connection to the MikroTik used for discovery
     */
   private var discoveryServer: ApiConnection = _
@@ -59,32 +83,6 @@ class Discovery extends Actor with ActorLogging {
       * dedicated device
       */
     case "Discover"     => discover()
-  }
-
-  /**
-    * Initializes the actor by opening the connection to the
-    * MikroTik API on the dedicated device
-    */
-  override def preStart(): Unit = {
-    try {
-      log.info("Initializing API connection to discovery system")
-
-      val host = config.getString("quasimodo.discovery.host")
-      val user = config.getString("quasimodo.discovery.user")
-      val pass = config.getString("quasimodo.discovery.pass")
-
-      log.info(s"Connecting to device at $host")
-      discoveryServer = ApiConnection.connect(host)
-
-      log.info(s"Logging into device as $user")
-      discoveryServer.login(user, pass)
-
-      log.info("API connection to the discovery system was successful")
-    }
-    catch {
-      case ex: Exception =>
-        throw new RuntimeException("An exception was thrown when initializing the discovery actor", ex)
-    }
   }
 
   /**

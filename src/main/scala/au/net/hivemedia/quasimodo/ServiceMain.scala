@@ -2,10 +2,14 @@ package au.net.hivemedia.quasimodo
 
 import java.io.File
 
-import akka.actor.{ActorRef, Props, ActorSystem}
+import akka.actor._
+import akka.pattern._
+import akka.util.Timeout
 import com.typesafe.config.{Config, ConfigFactory}
 import com.typesafe.scalalogging.LazyLogging
+import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration._
 import scala.util.{Failure, Success}
 
 /**
@@ -24,6 +28,16 @@ object ServiceMain extends LazyLogging {
     * Represents the Actor System used by the service to run its actors in
     */
   implicit var actorSystem: ActorSystem = _
+
+  /**
+    * Default timeout for actor asks
+    */
+  implicit val timeout: Timeout = Timeout(60, SECONDS)
+
+  /**
+    * The actor that supervises the other actors running in this service
+    */
+  var supervisor: ActorRef = _
 
   /**
     * The actor running as the discovery actor
@@ -69,9 +83,17 @@ object ServiceMain extends LazyLogging {
       """.stripMargin))
 
 
+    logger.info("Initializing the actor supervisor")
+
+    supervisor = actorSystem.actorOf(Props[Supervisor], "Supervisor")
+
+
     logger.info("Initializing and starting the discovery system")
 
-    discoveryActor = actorSystem.actorOf(Props[Discovery], "Discovery")
+    Await.result(supervisor ? (Props[Discovery], "Discovery"), timeout.duration) match {
+      case actor: ActorRef =>
+        discoveryActor = actor
+    }
   }
 
   /**

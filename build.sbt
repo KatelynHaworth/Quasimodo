@@ -27,6 +27,7 @@ lazy val root = (project in file(".")).
     buildInfoPackage := "au.net.hivemedia.quasimodo"
   )
 
+fork in run := true
 
 /**
   * sbt-native-packager global settings
