@@ -1,0 +1,14 @@
+# Defines the max amount of memory that should
+# be allocated to the daemon for its heap
+# -----------------
+HEAP_MAX=40m
+
+# Defines how much memory should be allocated
+# into the heap on start
+# -----------------
+HEAP_START=10m
+
+# Defines the options passed to the Java call
+# when the daemon starts
+# -----------------
+JAVA_OPTS="-Xms$HEAP_START -Xmx$HEAP_MAX $JAVA_OPTS"
