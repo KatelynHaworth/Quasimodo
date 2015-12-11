@@ -2,8 +2,12 @@ language: scala
 scala:
   - 2.11.7
 
+addons:
+  apt:
+    packages:
+      - rpm
+
 before_deploy:
-  - apt-get install rpm
   - sbt rpm:package-bin
 
 deploy:
