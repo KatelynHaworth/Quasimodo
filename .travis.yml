@@ -11,8 +11,12 @@ before_deploy:
   - sbt rpm:package-bin
 
 deploy:
-  provider: bintray
-  file: ./deploy-descriptor.json
-  user: liamhaworth
-  key:
-    secure: BwUjxws8xQLQctQoKD//Fba0/1RsbZ6ONc+/0aG8yVoClAPXdEUE+aHsX6S3wDt8+UPjandDS2dMimb147/DB+w1+WDIEm3YByzr6tpfn6jRZyZCuee0MrLnW8/9EUqoqkFbave4pmPRKModhG/JsO5WmWqwMEeuhYJRuh/i0TFdGXJYtJ5AvRvXg+cteKriCW1YpHG+HshCxMCkMO8YZX7wCgzct9UH6SVj1kBnK786/OHZ/VMYW2JwcYnds3lRzHjgNW8kZIsgCs6AEK7skaLugTzOfjzhdnDYLCeAuKJg3DKz3M5sl4wad8lKfPS5eAryEYtKV7T/17MGA0j6I16ee3tTNmJG53NYc2G7EI0F1KKahXpgvf0rdL1LQQgswy0PjTdMsYKxZHryVTiNebatP0J0ObJVBAknivY9pS+YdusaVAxcGKwdrDc9WBz3BEaDdWp1enyq03Yztx64YHMBWRAu+anQFdg6oeaNnbJ1KTYBzuY7/JHuhhrSClQLXW7iwkPxZMlLbUHgVzfQ/sxpWVSzA6+jQTs0jYXICAgJgRJwuPQ0z52ZuTuwKaeL2yTCK6BKnUZbYsUiUezX6j5e+iTkD49ULOsvhkViQ58dQeO3GUJqQxnzv23fWkDINRbV/KuUwDKuVLT2h0b9IAioSlNNzelHnOMKXfXEXqY=
+  provider: packagecloud
+  repository: stable
+  user: hivemedia
+  dist: el/7
+  local-dir: target/rpm/RPMS/noarch
+  token:
+    secure: KGNWY8Jipd1rD8EvB/6qDGv0WdMhu45R6jBiTjoUZSc0T9vwwgdN9MvzhN7Kjtq32r7wsT6ypUtIdyF0NH5Ey/3ILRYaqq04gpCQ36SKPaPXshL/8aFOzxZN30AKmci4gKnlta/UTXFovwkBHtwe8Y+iuuzcIaJV/r/vbHh7x+xT5wvvJFP1I1P6F5S+nzhxE7oqWtw0p9E15BKucwrr1ZI1Zb26FtxQfFj9z1FlNPeOCGAJVDYl7YLkv+KHnYkmJT+fwQ4cOFJgFCH3ZIcL5S+P4iu7nVcOJnN+mAGO9KBHm2sXjhkJ/5FisIKR0z5dzS/w4dK7BcmLHg9qxEfDIKB1amIlK6cNEQ9WRxcA1iiWk+DdVLV148/SWhO6EQCGnNQxSfbL6FjHzvj6H0KZPq6OUVUDJHGMv5WkCB2fQ9rnu2yAB611fuDH+6N6YODqMTsihKc8PrrBVd95B/EZGdnT5s1q86eShmQPFrh1gBePa3Tlw6A4sRIQdKoq/tCLBSaTuCw5Gw9RYBNIsUQx+qhfOoygWu9SaeJkUCThJMPZqUwso0qSQtX9pnCC+YWT1xPLa/jssYBiXB/YWEch0kZqsSPc94+OavRUGm1yoSCNWYIXJg8KAHbvRmM1N3Wo9mtIm9BqubKOjpTGRRQsJoKTiUXbZooJTJRkIf/2qXc=
+  on:
+    branch: master
