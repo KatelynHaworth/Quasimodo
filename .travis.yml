@@ -8,7 +8,7 @@ addons:
       - rpm
 
 before_deploy:
-  - mkdir {rpm,deb}
+  - mkdir -p {rpm,deb}
   - sbt rpm:package-bin
   - cp target/rpm/RPMS/noarch/*.rpm rpm/
   - sbt debian:package-bin
