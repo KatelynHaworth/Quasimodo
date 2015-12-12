@@ -9,7 +9,7 @@ addons:
 
 before_deploy:
   - sbt rpm:package-bin
-  - sbt deb:package-bin
+  - sbt debian:package-bin
 
 deploy:
   provider: packagecloud
