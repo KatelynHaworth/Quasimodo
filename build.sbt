@@ -59,4 +59,9 @@ rpmRelease := version.value.substring(version.value.indexOf("-") + 1).replace("-
 rpmRequirements := Seq("java-1.8.0-openjdk")
 
 
-//TODO: Implement deb settings
+/**
+  * sbt-native-package deb settings
+  */
+version in Debian := version.value
+
+debianPackageDependencies in Debian ++= Seq("openjdk-8-jre")
