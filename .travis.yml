@@ -8,8 +8,11 @@ addons:
       - rpm
 
 before_deploy:
+  - mkdir {rpm,deb}
   - sbt rpm:package-bin
+  - cp target/rpm/RPMS/noarch/*.rpm rpm/
   - sbt debian:package-bin
+  - cp target/*.deb deb/
 
 deploy:
   provider: packagecloud
@@ -17,6 +20,7 @@ deploy:
   username: hivemedia
   dist: el/7
   skip_cleanup: true
+  local-dir: rpm
   token:
     secure: KGNWY8Jipd1rD8EvB/6qDGv0WdMhu45R6jBiTjoUZSc0T9vwwgdN9MvzhN7Kjtq32r7wsT6ypUtIdyF0NH5Ey/3ILRYaqq04gpCQ36SKPaPXshL/8aFOzxZN30AKmci4gKnlta/UTXFovwkBHtwe8Y+iuuzcIaJV/r/vbHh7x+xT5wvvJFP1I1P6F5S+nzhxE7oqWtw0p9E15BKucwrr1ZI1Zb26FtxQfFj9z1FlNPeOCGAJVDYl7YLkv+KHnYkmJT+fwQ4cOFJgFCH3ZIcL5S+P4iu7nVcOJnN+mAGO9KBHm2sXjhkJ/5FisIKR0z5dzS/w4dK7BcmLHg9qxEfDIKB1amIlK6cNEQ9WRxcA1iiWk+DdVLV148/SWhO6EQCGnNQxSfbL6FjHzvj6H0KZPq6OUVUDJHGMv5WkCB2fQ9rnu2yAB611fuDH+6N6YODqMTsihKc8PrrBVd95B/EZGdnT5s1q86eShmQPFrh1gBePa3Tlw6A4sRIQdKoq/tCLBSaTuCw5Gw9RYBNIsUQx+qhfOoygWu9SaeJkUCThJMPZqUwso0qSQtX9pnCC+YWT1xPLa/jssYBiXB/YWEch0kZqsSPc94+OavRUGm1yoSCNWYIXJg8KAHbvRmM1N3Wo9mtIm9BqubKOjpTGRRQsJoKTiUXbZooJTJRkIf/2qXc=
   on:
@@ -28,6 +32,7 @@ deploy:
   username: hivemedia
   dist: ubuntu/trusty
   skip_cleanup: true
+  local-dir: deb
   token:
     secure: KGNWY8Jipd1rD8EvB/6qDGv0WdMhu45R6jBiTjoUZSc0T9vwwgdN9MvzhN7Kjtq32r7wsT6ypUtIdyF0NH5Ey/3ILRYaqq04gpCQ36SKPaPXshL/8aFOzxZN30AKmci4gKnlta/UTXFovwkBHtwe8Y+iuuzcIaJV/r/vbHh7x+xT5wvvJFP1I1P6F5S+nzhxE7oqWtw0p9E15BKucwrr1ZI1Zb26FtxQfFj9z1FlNPeOCGAJVDYl7YLkv+KHnYkmJT+fwQ4cOFJgFCH3ZIcL5S+P4iu7nVcOJnN+mAGO9KBHm2sXjhkJ/5FisIKR0z5dzS/w4dK7BcmLHg9qxEfDIKB1amIlK6cNEQ9WRxcA1iiWk+DdVLV148/SWhO6EQCGnNQxSfbL6FjHzvj6H0KZPq6OUVUDJHGMv5WkCB2fQ9rnu2yAB611fuDH+6N6YODqMTsihKc8PrrBVd95B/EZGdnT5s1q86eShmQPFrh1gBePa3Tlw6A4sRIQdKoq/tCLBSaTuCw5Gw9RYBNIsUQx+qhfOoygWu9SaeJkUCThJMPZqUwso0qSQtX9pnCC+YWT1xPLa/jssYBiXB/YWEch0kZqsSPc94+OavRUGm1yoSCNWYIXJg8KAHbvRmM1N3Wo9mtIm9BqubKOjpTGRRQsJoKTiUXbZooJTJRkIf/2qXc=
   on:
